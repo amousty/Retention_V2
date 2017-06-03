@@ -1,0 +1,11 @@
+Nom 		: ressourcesjoueur.php
+
+Rôle 		: Une requête SQL va rechercher les ressources possédées par la personne connectée.
+		  Ces informations seront affichées sur les deux "pages visibles" du gamescreen. 
+
+Entrée(s) 	: /
+
+Sortie(s) 	: Une chaine de caractères, séparée par un "-", contenant : 
+		  - la quantité de nourriture de la personne connectée
+		  - la quantité de bois de la personne connectée
+		  - la quantité de pierre de la personne connectée

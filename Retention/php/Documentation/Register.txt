@@ -1,0 +1,14 @@
+Nom 		: register.php
+
+Rôle 		: Ajoute une personne si : - La personne n'est pas déjà dans la DB.
+					   - Un mot de passe est saisi (pas "").
+					   - Les deux MDP sont égaux.
+
+Entrée(s) 	: - Le login
+		  - Le mot de passe
+		  - Le second mot de passe pour vérifier
+
+Sortie(s) 	: - Le code permettant de savoir si le login s'est bien passé.
+		  - OK si authentification correcte.
+ 		  - MDP si les mots de passe sont invalides.
+		  - ERR si nom de compte déjà pris (attention, case sensitive).

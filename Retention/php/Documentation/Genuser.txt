@@ -1,0 +1,14 @@
+Nom 		: genuser.php
+
+Rôle 		: Via une requête SQL et les données fournies en entrée, il va ressortir une chaine de caractère
+		  permettant d'afficher des informations sur l'hexagone cliqué. 
+
+
+Entrée(s) 	: - La position verticale.
+		  - La position horizontale.
+
+Sortie(s) 	: Une chaine de caractères contenant : 
+		  - Le login de la personne.
+		  - La couleur de la personne.
+ 		  - La position verticale de la personne.
+		  - La position horizontale de la personne
