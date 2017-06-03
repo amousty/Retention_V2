@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang = "fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Retention</title>
+    <link href="http://fonts.googleapis.com/css?family=Karla:400,700"
+    rel="stylesheet"/>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <link href="css/fichierProjet.css" rel="stylesheet"  type="text/css"/>
+    <link href="css/default.css"    rel="stylesheet"  type="text/css" media="all" />
+    <link href="css/fonts.css"      rel="stylesheet"  type="text/css" media="all" />
+  </head>
+
+  <body >
+    <!-- Chargement de la fonction onload se trouve à la fin du js-->
+    <div id="wrapper">
+      <div id="header-wrapper">
+        <div id="header" class="container">
+          <div id = "logo">
+            <h1>retention</h1>
+            <p>Design by ADRIEN</p>
+          </div>
+        </div>
+      </div>
+    	<div id="page" class="container">
+    		<div id="content">
+    			<!-- Partie map-->
+          <div id = "gamescreen">
+            <div id="ressources">
+              <img src="img/nourriture.png"/>
+              <label id="nourriture"></label><br />
+              <img src="img/bois.png"/>
+              <label id="bois"></label><br />
+              <img src="img/pierre.jpg"/>
+              <label id="pierre"></label><br />
+            </div>
+            <!-- Divison pour la map-->
+            <div id = "carte"> <!-- La carte est générée ici. --> </div>
+            <!-- Divison pour la vue villages-->
+            <div id = "village">
+              <div id="infoVillage"></div>
+              <div id="btnCreerBat"></div>
+              <div id="infoPersonnage"></div>
+              <div id="vueVillage"></div>
+            </div>
+
+            <!-- Partie bouton-->
+    				<div id = "bouton">
+    					<input type="button" id = "logout" value="Deconnexion"/>
+    					<input type="button" id = "reset"  value="Reset"/>
+              <input type="button" id = "return" value="Retour"/>
+    				</div>
+          </div> <!-- Fin de gamescreen-->
+
+          <!-- partie loginscreen-->
+          <!-- loginForm -->
+          <img src = "img/logo.jpg" id="logoJeu"/>
+          <div id="loginscreen">
+            <div id="loginForm">
+              <div id="login-triangle"></div>
+              <h2 id="login-header">Log in</h2>
+              <div id="login-container">
+                <p><input type="pseudo" id="pseudoLogin" placeholder="Pseudo"></p>
+                <p><input type="password" id ="passwordLogin" placeholder="Password"></p>
+                <p>
+                  <input type="button"  id ="login" value="Log in">
+                  <input type="button"  id ="register" value="Register">
+                </p>
+              </div>    <!-- Fin de login-container-->
+            </div>    <!-- Fin de loginForm-->
+
+            <!-- registerForm-->
+            <div id="registerForm">
+              <div id="register-triangle"></div>
+              <h2 id="register-header">Register</h2>
+              <div id="register-container">
+                <p><input type="pseudo" id="pseudoRegister" placeholder="Pseudo"></p>
+                <p><input type="password" id ="passwordRegister" placeholder="Password (1)"></p>
+                <p><input type="password" id ="passwordRegisterTwo" placeholder="Password (2)"></p>
+                <p>
+                  <input type="button"  id ="registerR" value="Register">
+                  <input type="button"  id ="loginR" value="Retour">
+                </p>
+              </div>    <!-- Fin de register-container -->
+            </div>    <!-- Fin de register -->
+          </div>    <!-- Fin de loginscreen -->
+    	 </div>      <!-- Fin de content -->
+      </div>      <!-- Fin de page -->
+    </div>      <!-- Fin de wrapper -->
+    <div id="copyright" class="container">
+      <p>
+        &copy; AJAX. All rights reserved. | Photos by <a href="http://google.com/">Google</a> | Design by ADRIEN.
+      </p>
+    </div>    <!-- Fin de copyright-->
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/fichierProjet.js"></script>
+    <!-- Je ne peux pas déplacer ce script pour le mettre avec les autres ça fait planter la page. -->
+  </body>
+</html>
