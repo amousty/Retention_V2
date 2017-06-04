@@ -8,6 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
+	<meta charset="utf-8">
 <title>Retention</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
@@ -73,9 +74,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="col-md-8 contact_left">
 			<h3>Get connected</h3>
 			<p>You have to be logged in in order to play with your friends at Retention</h4>
-			<form method="post" action="contact-post.html">
-				<input type="text" value="Email (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
-				<input type="text" value="Password (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+			<form method="get" id="signin-form" action="php/login.php">
+				<input id="login" type="text" value="Email (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
+				<input id="pwd" type="password" value="Password (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
 				<span class="pull-right"><input type="submit" value="Sign in"></span>
 			</form>
 		</div>
@@ -92,7 +93,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="col-md-8 contact_left">
 			<h3>Create your account</h3>
 			<p>You have to be registered and logged in in order to play with your friends at Retention</h4>
-			<form method="post" action="contact-post.html">
+			<form method="post" id="signup-form">
 				<input type="text" value="Email (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
 				<input type="text" value="Password (1) (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password (1)';}">
 				<input type="text" value="Password (2) (Required)" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password (2)';}">

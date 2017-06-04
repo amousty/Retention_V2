@@ -290,7 +290,9 @@ nav a#pull {
 	color: #999999;
 	line-height: 1.5em;
 }
-.contact_left form input[type="text"],.contact_left form textarea{
+.contact_left form input[type="text"],
+.contact_left form input[type="password"],
+.contact_left form textarea{
 	font-family: 'open_sansregular';
 	margin:20px 0;
 	box-shadow: none;
@@ -314,10 +316,15 @@ nav a#pull {
 	resize: none;
 	height: 160px;
 }
-.contact_left form input[type="text"]:focus,.contact_left form textarea:focus{
+.contact_left form input[type="text"]:focus,
+.contact_left form textarea:focus,
+.contact_left form input[type="password"]:focus,{
 	border: 1px solid #2EB398;
 }
-.contact_left form input[type="text"]:hover,.contact_left form textarea:hover{
+.contact_left form input[type="text"]:hover,
+.contact_left form input[type="password"]:hover,
+.contact_left form textarea:hover
+{
 	border-color: #2EB398;
 }
 .contact_right {
@@ -718,7 +725,8 @@ h2.style{
 .news_letter{
 	margin: 8% 0;
 }
-.news_letter form input[type="text"]{
+.news_letter form input[type="text"],
+.news_letter form input[type="password"]{
 	font-family: 'open_sansregular';
 	font-weight:100;
 	padding: 10px;
