@@ -22,7 +22,7 @@
   }
   else
   {
-    $stringRep .= "ERR";
+    $stringRep .= "ERR + " . $login . " / " . $passwd;
   }
 
   // Renvoi des informations
