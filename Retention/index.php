@@ -27,15 +27,15 @@
 	<![endif]-->
 </head>
 <body>
-	<?php require '/inc/header.inc.php'; ?>
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/header.inc.php'; ?>
 
-	<?php require '/inc/sign-form.inc.php'; ?>
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/sign-form.inc.php'; ?>
 
-	<?php require '/inc/slider.inc.php'; ?>
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/slider.inc.php'; ?>
 
-	<?php require '/inc/about.inc.php'; ?>
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/about.inc.php'; ?>
 
-	<?php require '/inc/footer.inc.php'; ?>
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/footer.inc.php'; ?>
 
 	<script type="text/javascript" src="js/index.js"></script>
 </body>
