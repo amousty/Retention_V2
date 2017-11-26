@@ -37,6 +37,8 @@
 
 	<?php require_once $_SERVER['DOCUMENT_ROOT']. '/inc/footer.inc.php'; ?>
 
+	<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/hiddenForm.inc.php'; ?>
+
 	<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

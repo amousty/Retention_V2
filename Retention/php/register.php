@@ -7,7 +7,7 @@
   $dbh = new PDO("sqlite:../../db/db.sqlite");
 
   // on le compare aux personnes déjà dans la database
-  $queryCompare = "select login from usr where login='$login'";
+  $queryCompare = "select fldlogin from tblusr where fldlogin='$login'";
   $stmTwo     = $dbh->prepare($queryCompare);
   $stmTwo->execute();
   $res        = $stmTwo->fetch();
@@ -16,12 +16,12 @@
   // Si le compte n'existe pas déjà et qu'il est différent de rien du tout ->
   if ($res == null && $login != "")
   {
-      $query = "insert into  usr (login, passwd) values ('$login', '$passwd')";
+      $query = "insert into  tblusr (fldlogin, fldpasswd) values ('$login', '$passwd')";
       $stmAdd = $dbh->prepare($query);
       $stmAdd->execute();
       $addAccount = $stmAdd->fetch();
       $stringRep         .= "OK";
-      $_SESSION["id"]     = $addAccount["id"];
+      $_SESSION["id"]     = $addAccount["fldid"];
   }
   else
   {

@@ -10,7 +10,7 @@
 			<ul class="top-nav nav_list" id="navbar-text">
 				<li class="page-scroll">
 					<a id="signin-trigger" href="#">
-						Sign in
+						Login
 					</a>
 				</li>
 				<li class="logo page-scroll">
@@ -20,7 +20,7 @@
 				</li>
 			  <li class="page-scroll">
 					<a id="signup-trigger" href="#">
-						Sign up
+						Register
 					</a>
 				</li>
 			</ul>

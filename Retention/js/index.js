@@ -6,17 +6,17 @@ var index = (function(){
    var status = "disconnected";
    var init = function(){
       $("#signup-div").hide();
-     $("#signin-div").hide();
+      $("#signin-div").hide();
    }
 
    var toggleLogin = function(){
      switch(index.status){
        case "connected" :
           $("#slider_bg").hide();
-        break;
+          break;
        case "disconnected" :
           $("#slider_bg").show();
-        break;
+          break;
      }
      index.callInit();
    }
@@ -28,7 +28,7 @@ var index = (function(){
     },
     callToggleLogin : function() {
       toggleLogin();
-    }
+    },
   };
 })();
 
@@ -58,9 +58,13 @@ $(document).ready(function(){
 
         /* Alerts the results */
           posting.success(function( data ) {
-              var res = data;
-              index.status = "connected";
-              index.callToggleLogin();
+              if(data == "OK"){
+                index.status = "connected";
+                index.callToggleLogin();
+              }
+              else{
+                redirectToErrorPage(data);
+              }
           });
     });
 
@@ -87,6 +91,12 @@ $(document).ready(function(){
             alert("WRONG PWD");
         }
    });
+
+   // Redirect to the error page
+   function redirectToErrorPage(errorText){
+     //$('#errorText').val(errorText);
+     window.location.href = "error.php?err=" errorText;
+   }
 
      // Onlick
         $( "#signin-trigger" ).click(function() {
