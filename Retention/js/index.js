@@ -6,7 +6,7 @@ var index = (function(){
    var status = "disconnected";
    var init = function(){
       $("#signup-div").hide();
-      $("#signin-div").hide();
+      //$("#signin-div").hide();
    }
 
    var toggleLogin = function(){
@@ -35,38 +35,39 @@ var index = (function(){
 // CALL METHODS
 
 $(document).ready(function(){
-     // Starting
-     index.callInit();
+  // Starting
+  index.callInit();
 
-     // RPCS
-     // LOGIN
-     $("#signin-form").submit(function(event){
-         /* stop form from submitting normally */
-         event.preventDefault();
+  // RPCS
+  // LOGIN
+  $("#signin-form").submit(function(event){
+    /* stop form from submitting normally */
+    event.preventDefault();
 
-         /* get the action attribute from the <form action=""> element */
-         var $form = $( this );
-          var url = $form.attr( 'action' );
+    /* get the action attribute from the <form action=""> element */
+    var $form = $( this );
+    var url = $form.attr( 'action' );
+    alert($("#login-signin").val());
+    /* Send the data using post with element id name and name2*/
+    var posting = $.get(
+      url,
+      {
+        login : $("#login-signin").val(),
+        passwd : $("#pwd-signin").val()
+      }
+    ).success(
+        function( data ) {
+          alert(data);
+            if(data == "OK"){
 
-          /* Send the data using post with element id name and name2*/
-        var posting = $.post(
-          url,
-          {
-            login : $("#login-signin").val(),
-            passwd : $("#pwd-signin").val()
+              index.status = "connected";
+              index.callToggleLogin();
+            }
+            else{
+              redirectToErrorPage(data);
+            }
           });
-
-        /* Alerts the results */
-          posting.success(function( data ) {
-              if(data == "OK"){
-                index.status = "connected";
-                index.callToggleLogin();
-              }
-              else{
-                redirectToErrorPage(data);
-              }
-          });
-    });
+  });
 
     // SIGN UP
     $("#signup-form").submit(function(event){
@@ -95,7 +96,7 @@ $(document).ready(function(){
    // Redirect to the error page
    function redirectToErrorPage(errorText){
      //$('#errorText').val(errorText);
-     window.location.href = "error.php?err=" errorText;
+     window.location.href = "error.php?err=" + errorText;
    }
 
      // Onlick

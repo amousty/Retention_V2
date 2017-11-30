@@ -1,37 +1,20 @@
 <?php
   session_start();
+  include 'phpHelper.php';
 
-  $login  = $_POST["login"];
-  $passwd = $_POST["passwd"];
+  $login  = isset($_GET["login"]) ? $_GET["login"] : "";
+  $passwd = isset($_GET["passwd"]) ? $_GET["passwd"] : "";
 
-  $dbh = new PDO("sqlite:../../db/db.sqlite", 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-  // Mis en place de la requête SQL
-  $query = "select fldid, fldlogin from tblusr where fldlogin='$login' and fldpasswd='$passwd'";
-
-  $stm = $dbh->prepare($query);
-  $stm->execute();
-
-  //Resultat ne vaut rien mais il prendra les valeurs par la suite
-  $stringRep = "";
-  if ($res=$stm->fetch())
-  {
-    $_SESSION["id"]         = $res["fldid"];
-    $_SESSION["login"]      = $res["fldlogin"];
-
+  $query = "select top 1 *  from tblusr where fldlogin='$login' and fldpasswd='$passwd'";
+ /* Check if the user could be connected */
+  $loginResult = executeBooleanQuery($query, "ERR WITH LOGIN");
+  if (  $loginResult = "OK"){
     /* If the user is successfully connected, we write it withtin the history tbl */
-    $query =  "INSERT INTO tblhistory (fldusrid, fldcreatedon) VALUES (" . $res["fldid"] . ", " . date("d-m-Y H:i:s") . ");";
-
-    $stm = $dbh->prepare($query);
-    $stm->execute();
-    $stringRep .= "OK";
+    $queryHistory =  "INSERT INTO tblhistory (fldusrid, fldcreatedon) VALUES (" . "10"/*$res["fldid"]*/ . ", " . date("d-m-Y") . ");";
+    echo executeVoidQuery($queryHistory, "ERR WITH HISTORY LOGIN");
   }
-  else
-  {
-    $stringRep .= "ERR + " . $login . " / " . $passwd;
+  else{
+      echo $loginResult;
   }
-
-  // Renvoi des informations
-  echo $stringRep;
 
 ?>
