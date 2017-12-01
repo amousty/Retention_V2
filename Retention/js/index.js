@@ -47,7 +47,6 @@ $(document).ready(function(){
     /* get the action attribute from the <form action=""> element */
     var $form = $( this );
     var url = $form.attr( 'action' );
-    alert($("#login-signin").val());
     /* Send the data using post with element id name and name2*/
     var posting = $.get(
       url,
