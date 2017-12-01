@@ -27,11 +27,11 @@
 	<![endif]-->
 </head>
 <body>
-	<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/header.inc.php'; ?>
+
 
 	<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/error.inc.php'; ?>
 
-	<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/footer.inc.php'; ?>
+	
 
 	<script type="text/javascript" src="../js/index.js"></script>
 </body>

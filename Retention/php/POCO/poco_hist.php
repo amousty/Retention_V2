@@ -14,17 +14,22 @@
   /* 1. insertHistory */
   function insertHistory($usrID){
     try{
+      $today = date("Y-m-d H:i:s");
       /* Prepare DB */
       $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../../db/db.sqlite', '', '',  $pdo_options);
+      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
 
       /* Select  */
-      $query = $db->prepare("tblHistory (fldusrid, fldcreatedon, fldlastupdateon, fldlastupdateby) values (?, ?, ?, ?)");
-      $query->excute(array($usrID, date("d-m-Y"), date("d-m-Y"), $usrID));
-      echo "OK";
+      $query = $db->prepare("INSERT INTO tblHistory (fldusrid, fldcreatedon, fldlastupdateon, fldlastupdateby) VALUES (?, ?, ?, ?)");
+      $query->bindParam(1, $usrID);
+      $query->bindParam(2, $today);
+      $query->bindParam(3, $today);
+      $query->bindParam(4, $usrID);
+      $query->execute();
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
@@ -38,24 +43,24 @@
     try{
       /* Prepare DB */
       $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../../db/db.sqlite', '', '',  $pdo_options);
+      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
 
       /* Select  */
-      $query = $db->prepare("delete from tblHistory set where fldhistoryid = ?");
+      $query = $db->prepare("DELETE FROM tblHistory WHERE fldhistoryid = ?");
       $query->excute(array($id));
 
       /* update session value */
       cleanSession();
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
   /* 4. getListHistory */
   function getListHistory(){
-    echo "ERR : Not implemented yet";
+    return "ERR : Not implemented yet";
   }
 
   /* 5. getHistory */
@@ -63,23 +68,23 @@
     try{
       /* Prepare DB */
       $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../../db/db.sqlite', '', '',  $pdo_options);
+      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
 
       /* Select  */
-      $query = $db->prepare("select *  from tblHistory where fldusrid= ?");
+      $query = $db->prepare("SELECT *  FROM tblHistory WHERE fldusrid= ?");
       $query->excute(array($fldusrid));
       while($row=$query->fetch(PDO::FETCH_OBJ)) {
         /*its getting data in line. And its an object*/
-        echo $row;
+        return $row;
       }
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
   /* 6. getHistoryById */
   function getHistoryById($id){
-    echo "ERR : Not implemented yet";
+    return "ERR : Not implemented yet";
   }
 ?>

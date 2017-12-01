@@ -32,7 +32,7 @@
 				<div class="col-md-8 contact_left">
 					<h3>Get connected</h3>
 					<p>You have to be logged in in order to play with your friends at Retention</p>
-					<form method="get" id="signin-form" action="php/login.php">
+					<form method="post" id="signin-form" action="php/login.php">
 						<input id="login-signin" type="text" value="Jean" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}"/>
 						<input id="pwd-signin" type="password" value="pass" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}"/>
 						<span class="pull-right"><input type="submit" value="Sign in"></input></span>

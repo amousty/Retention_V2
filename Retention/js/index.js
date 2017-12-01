@@ -5,8 +5,8 @@ var index = (function(){
    // PRIVATE
    var status = "disconnected";
    var init = function(){
-      $("#signup-div").hide();
-      //$("#signin-div").hide();
+      //$("#signup-div").hide();
+      $("#signin-div").hide();
    }
 
    var toggleLogin = function(){
@@ -42,13 +42,13 @@ $(document).ready(function(){
   // LOGIN
   $("#signin-form").submit(function(event){
     /* stop form from submitting normally */
-    event.preventDefault();
+    //event.preventDefault();
 
     /* get the action attribute from the <form action=""> element */
     var $form = $( this );
     var url = $form.attr( 'action' );
     /* Send the data using post with element id name and name2*/
-    var posting = $.get(
+    var posting = $.post(
       url,
       {
         login : $("#login-signin").val(),
@@ -58,7 +58,6 @@ $(document).ready(function(){
         function( data ) {
           alert(data);
             if(data == "OK"){
-
               index.status = "connected";
               index.callToggleLogin();
             }
@@ -74,28 +73,30 @@ $(document).ready(function(){
          event.preventDefault();
         if($("#pwd-signup").val() !== "" && $("#pwd-signup").val() === $("#pwd2-signup").val()){
 
-            /* get the action attribute from the <form action=""> element */
-            var $form = $( this );
-             var url = $form.attr( 'action' );
+        /* get the action attribute from the <form action=""> element */
+        var $form = $( this );
+        var url = $form.attr( 'action' );
 
-             /* Send the data using post with element id name and name2*/
-           var posting = $.post( url, { login : $("#login-signup").val(), passwd : $("#pwd-signup").val() });
+        /* Send the data using post with element id name and name2*/
+        var posting = $.post( url, { login : $("#login-signup").val(), passwd : $("#pwd-signup").val() });
 
-           /* Alerts the results */
-             posting.success(function( data ) {
-                 var res = data;
-               alert(res);
-             });
-        }
-        else{
-            alert("WRONG PWD");
-        }
+        /* Alerts the results */
+        posting.success(function( data ) {
+          var res = data;
+          alert(res);
+        });
+      }
+      else{
+        redirectToErrorPage("WRONG PWD");
+      }
    });
+
+
 
    // Redirect to the error page
    function redirectToErrorPage(errorText){
      //$('#errorText').val(errorText);
-     window.location.href = "error.php?err=" + errorText;
+     window.location.href = "views/error.php?err=" + errorText;
    }
 
      // Onlick

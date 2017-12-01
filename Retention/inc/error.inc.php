@@ -1,6 +1,9 @@
 <h1>Error</h1>
-<p id="errorText">
-
+<br />
+<p id="errorText" style="color:red">
+  <?php
+	echo $_GET["err"];
+	?>
 </p>
-
-<input type=button class="btn" href="../index.php" value="Back"/>
+<br />
+<a href="../index.php" style="font-size:30px">Back</a>

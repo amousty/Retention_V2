@@ -1,6 +1,10 @@
 <?php
   /* Includes */
-//  require_once('../helpers/sessionHelper.php');
+  //  require_once('../helpers/sessionHelper.php');
+
+  /* Global variables */
+  $db_directory = 'sqlite:../../db/db.sqlite';
+  $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
   /*
     1. insertUsr
@@ -15,22 +19,17 @@
   function insertUsr($login, $passwd){
     try{
       /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
+      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
 
-      /* Select  */
-      $query = $db->prepare("tblusr (fldlogin, fldpasswd) values (?, ?)");
-      $query->excute(array($login, $passwd));
-      echo "OK";
+      /* SELECT  */
+      $query = $db->prepare("INSERT INTO tblusr (fldlogin, fldpasswd) VALUES (?, ?)");
+      $query->bindParam(1, $login);
+      $query->bindParam(2, $passwd);
+      $query->execute();
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
@@ -38,27 +37,20 @@
   function updateUsr($newLogin, $newPasswd, $oldLogin, $oldpasswd){
     try{
       /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
+      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
 
-      /* Select  */
-      $query = $db->prepare("update tblusr set fldlogin = ?, fldpasswd = ? where fldlogin = ? and fldpasswd ? ");
+      /* SELECT  */
+      $query = $db->prepare("update tblusr set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
       $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
 
       /* update session value */
       $_SESSION["login"]=$newLogin;
       $_SESSION["passwd"]=$newPasswd;
 
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
@@ -66,56 +58,44 @@
   function deleteUsr($id){
     try{
       /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
+      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
 
-      /* Select  */
-      $query = $db->prepare("delete from tblusr set where fldid = ?");
+      /* SELECT  */
+      $query = $db->prepare("delete FROM tblusr set WHERE fldid = ?");
       $query->excute(array($id));
 
       /* update session value */
       cleanSession();
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
   /* 4. getListUsr */
   function getListUsr(){
-    echo "ERR : Not implemented yet";
+    return "ERR : Not implemented yet";
   }
 
   /* 5. getUSr */
-  function getUsr($login){
+  function getUSr($login, $passwd){
     try{
       /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
+      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']) or die("cannot open the database");
 
-      /* Select  */
-      $query = $db->prepare("select * from tblusr where fldlogin= '?'");
-      $query->excute($login);
-      while($row=$query->fetch(PDO::FETCH_OBJ)) {
+      /* SELECT  */
+      $query = $db->prepare("SELECT * from tblusr where fldlogin= ? and fldpasswd = ?");
+      $query->bindParam(1, $login);
+      $query->bindParam(2, $passwd);
+      $query->execute();
+      while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        echo $row;
+        return $row["fldid"];
       }
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
@@ -123,19 +103,18 @@
   function getUsrById($id){
     try{
       /* Prepare DB */
-      $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
+      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
 
-      /* Select  */
-      $query = $db->prepare("select *  from tblusr where fldid= ?");
+      /* SELECT  */
+      $query = $db->prepare("SELECT *  FROM tblusr WHERE fldid= ?");
       $query->excute(array($id));
       while($row=$query->fetch(PDO::FETCH_OBJ)) {
         /*its getting data in line. And its an object*/
-        echo $row;
+        return $row;
       }
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 ?>

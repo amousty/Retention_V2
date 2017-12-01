@@ -1,35 +1,26 @@
 <?php
   session_start();
+  require_once('helpers/sessionHelper.php');
+  require_once('POCO/poco_usr.php');
+  //require_once('db_Call.php');
+  require_once('POCO/poco_hist.php');
 
-  $login  = $_POST["login"];
-  $passwd = $_POST["passwd"];
+  $login  = isset($_POST["login"]) ? $_POST["login"] : "";
+  $passwd = isset($_POST["passwd"]) ? $_POST["passwd"] : "";
 
-  $dbh = new PDO("sqlite:../../db/db.sqlite");
-
-  // on le compare aux personnes déjà dans la database
-  $queryCompare = "select fldlogin from tblusr where fldlogin='$login'";
-  $stmTwo     = $dbh->prepare($queryCompare);
-  $stmTwo->execute();
-  $res        = $stmTwo->fetch();
-  $stringRep  = "";
-
-  // Si le compte n'existe pas déjà et qu'il est différent de rien du tout ->
-  if ($res == null && $login != "")
-  {
-      $query = "insert into  tblusr (fldlogin, fldpasswd) values ('$login', '$passwd')";
-      $stmAdd = $dbh->prepare($query);
-      $stmAdd->execute();
-      $addAccount = $stmAdd->fetch();
-      $stringRep         .= "OK";
-      $_SESSION["id"]     = $addAccount["fldid"];
+  if(insertUsr($login, $passwd) == "OK"){
+    $usrID = getUsr($login, $passwd);
+    if (is_numeric($usrID)){
+      // If the user is successfully connected, we write it withtin the history tbl
+      updateSession($usrID, $login, $passwd);
+      insertHistory($usrID);
+      echo "OK";
+    }
+    else{
+      echo "ERR : " . $usrID;
+    }
   }
-  else
-  {
-    // Si on veut utiliser le compte "", il nous renvoie une erreur != que des mdps divergents.
-    $stringRep .= "ERR";
+  else{
+    echo "ERR : ERROR DURING INSERTING ACCOUNT";
   }
-
-  // Renvoi des informations
-  echo $stringRep;
-
 ?>
