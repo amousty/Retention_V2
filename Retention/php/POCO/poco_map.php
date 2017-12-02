@@ -1,126 +1,97 @@
 <?php
   /* Includes */
-  include 'sessionHelper.php';
+  require_once('../db_Call.php');
+
+  /* Global variables */
+  $db = initDB('../');
 
   /*
-    1. insertUsr
-    2. updateUsr
-    3. deleteUsr
-    4. getListUsr
-    5. getUSr
-    6. getUsrById
+    1. insertMap
+    2. updateMap
+    3. deleteMap
+    4. getListMap
+    5. getMapById
   */
 
-  /* 1. insertUsr */
-  function insertUsr($login, $passwd){
+  /* 1. insertMap */
+  function insertMap($login, $passwd){
     try{
-      /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
-
-      /* Select  */
-      $query = $db->prepare("tblusr (fldlogin, fldpasswd) values (?, ?)");
-      $query->excute(array($login, $passwd));
-      echo "OK";
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("INSERT INTO tblMap (fldlogin, fldpasswd) VALUES (?, ?)");
+      $query->bindParam(1, $login);
+      $query->bindParam(2, $passwd);
+      $query->execute();
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 2. updateUsr */
-  function updateUsr($newLogin, $newPasswd, $oldLogin, $oldpasswd){
+  /* 2. updateMap */
+  function updateMap($newLogin, $newPasswd, $oldLogin, $oldpasswd){
     try{
-      /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
-
-      /* Select  */
-      $query = $db->prepare("update tblusr set fldlogin = ?, fldpasswd = ? where fldlogin = ? and fldpasswd ? ");
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("update tblMap set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
       $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
 
       /* update session value */
-      $_SESSION["login"]=$newLogin;
-      $_SESSION["passwd"]=$newPasswd;
+      updateSession("", $newLogin, $newPasswd);
 
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 3. deleteUsr */
-  function deleteUsr($id){
+  /* 3. deleteMap */
+  function deleteMap($id){
     try{
-      /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
-
-      /* Select  */
-      $query = $db->prepare("delete from tblusr set where fldid = ?");
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("delete FROM tblMap set WHERE fldid = ?");
       $query->excute(array($id));
 
       /* update session value */
       cleanSession();
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 4. getListUsr */
-  function getListUsr(){
-    echo "ERR : Not implemented yet";
+  /* 4. getListMap */
+  function getListMap(){
+    return "ERR : Not implemented yet";
   }
 
-  /* 5. getUSr */
-  function getUSr($login){
+  /* 5. getMapById */
+  function getMapById($mapID){
     try{
-      /* Prepare DB */
-      $db = new PDO(
-        'sqlite:../../db/db.sqlite',
-        '',
-        '',
-        array(
-          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        )
-      );
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("SELECT * from tblMap where fldmapid= ?");
+      $query->bindParam(1, $mapID);
+      $query->execute();
 
-      /* Select  */
-      $query = $db->prepare("select *  from tblusr where fldlogin= ?");
-      $query->excute(array($login));
-      while($row=$query->fetch(PDO::FETCH_OBJ)) {
+      /* repare arrays */
+      $id = "";
+      $taby = array();
+      $tabx = array();
+      $tabplayer = array();
+      while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        echo $row;
+        if ($id != ""){
+          $id =$row["fldmapid"];
+        }
+        array_push($taby, $row["fldy"]);
+        array_push($tabx, $row["fldx"]);
+        array_push($tabplayer, $row["fldplayer"]);
       }
+      return new Map($id, $taby, $tabx, $tabplayer);
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
-  }
-
-  /* 6. getUsrById */
-  function getUsrById($id){
-
   }
 ?>

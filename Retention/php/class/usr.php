@@ -9,7 +9,5 @@
       $this->login = $l;
       $this->passwd = $p;
     }
-
-    public function EmptyUsr (){ }
   }
 ?>

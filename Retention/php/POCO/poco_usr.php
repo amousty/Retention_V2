@@ -3,7 +3,7 @@
   require_once('db_Call.php');
 
   /* Global variables */
-  $db = initDB();
+  $db = initDB('');
 
   /*
     1. insertUsr
