@@ -1,10 +1,9 @@
 <?php
   /* Includes */
-  //  require_once('../helpers/sessionHelper.php');
+  require_once('db_Call.php');
 
   /* Global variables */
-  $db_directory = 'sqlite:../../db/db.sqlite';
-  $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+  $db = initDB();
 
   /*
     1. insertUsr
@@ -18,11 +17,8 @@
   /* 1. insertUsr */
   function insertUsr($login, $passwd){
     try{
-      /* Prepare DB */
-      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
-
       /* SELECT  */
-      $query = $db->prepare("INSERT INTO tblusr (fldlogin, fldpasswd) VALUES (?, ?)");
+      $query = $GLOBALS['db']->prepare("INSERT INTO tblusr (fldlogin, fldpasswd) VALUES (?, ?)");
       $query->bindParam(1, $login);
       $query->bindParam(2, $passwd);
       $query->execute();
@@ -36,16 +32,12 @@
   /* 2. updateUsr */
   function updateUsr($newLogin, $newPasswd, $oldLogin, $oldpasswd){
     try{
-      /* Prepare DB */
-      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
-
       /* SELECT  */
-      $query = $db->prepare("update tblusr set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
+      $query = $GLOBALS['db']->prepare("update tblusr set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
       $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
 
       /* update session value */
-      $_SESSION["login"]=$newLogin;
-      $_SESSION["passwd"]=$newPasswd;
+      updateSession("", $newLogin, $newPasswd);
 
       return "OK";
     }
@@ -57,11 +49,8 @@
   /* 3. deleteUsr */
   function deleteUsr($id){
     try{
-      /* Prepare DB */
-      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
-
       /* SELECT  */
-      $query = $db->prepare("delete FROM tblusr set WHERE fldid = ?");
+      $query = $GLOBALS['db']->prepare("delete FROM tblusr set WHERE fldid = ?");
       $query->excute(array($id));
 
       /* update session value */
@@ -81,17 +70,14 @@
   /* 5. getUSr */
   function getUSr($login, $passwd){
     try{
-      /* Prepare DB */
-      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']) or die("cannot open the database");
-
       /* SELECT  */
-      $query = $db->prepare("SELECT * from tblusr where fldlogin= ? and fldpasswd = ?");
+      $query = $GLOBALS['db']->prepare("SELECT * from tblusr where fldlogin= ? and fldpasswd = ?");
       $query->bindParam(1, $login);
       $query->bindParam(2, $passwd);
       $query->execute();
       while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        return $row["fldid"];
+        return new Usr($row["fldid"], $login, $passwd);
       }
     }
     catch(PDOException $e){
@@ -102,15 +88,11 @@
   /* 6. getUsrById */
   function getUsrById($id){
     try{
-      /* Prepare DB */
-      $db = new PDO($GLOBALS['db_directory'], '', '',  $GLOBALS['pdo_options']);
-
       /* SELECT  */
-      $query = $db->prepare("SELECT *  FROM tblusr WHERE fldid= ?");
+      $query = $GLOBALS['db']->prepare("SELECT *  FROM tblusr WHERE fldid= ?");
       $query->excute(array($id));
       while($row=$query->fetch(PDO::FETCH_OBJ)) {
-        /*its getting data in line. And its an object*/
-        return $row;
+        return new Usr($row["fldid"], $row["fldlogin"], row["fldpasswd"]);
       }
     }
     catch(PDOException $e){

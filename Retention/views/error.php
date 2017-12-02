@@ -8,7 +8,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 	<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/include_css_js.inc.php'; ?>
 	<body>
+		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/header.inc.php'; ?>
 		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/error.inc.php'; ?>
+		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/footer.inc.php'; ?>
 		<script type="text/javascript" src="../js/index.js"></script>
 	</body>
 </html>
