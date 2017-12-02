@@ -12,7 +12,6 @@
 				<a href="#home" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"> </span></a>
 			</div>
 		</div>
-
 		<!-- start-smoth-scrolling -->
 	</div>
 </div>

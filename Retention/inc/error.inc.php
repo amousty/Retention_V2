@@ -6,4 +6,4 @@
 	?>
 </p>
 <br />
-<a href="../index.php" style="font-size:30px">Back</a>
+<a href="../index.php" class="btn" style="font-size:30px">Back</a>

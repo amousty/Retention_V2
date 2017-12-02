@@ -424,7 +424,7 @@ nav a#pull {
 	height: 32px;
 	border: none;
 	text-indent: 100%;
-	background: url(../images/arrow_up.png) no-repeat center;
+	background: url(../img/arrow_up.png) no-repeat center;
 }
 /* start portfolio  */
 
@@ -706,7 +706,7 @@ h2.style{
 	width:45px;
 	height:45px;
 	display:block;
-	background:url(../images/social-icons.png) no-repeat;
+	background:url(../img/social-icons.png) no-repeat;
 	margin:0 auto;
 }
 .social_network i.twitter-icon{

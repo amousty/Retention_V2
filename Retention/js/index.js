@@ -5,17 +5,17 @@ var index = (function(){
    // PRIVATE
    var status = "disconnected";
    var init = function(){
-      //$("#signup-div").hide();
-      $("#signin-div").hide();
+      $("#signup-div").hide();
+      //$("#signin-div").hide();
    }
 
    var toggleLogin = function(){
      switch(index.status){
        case "connected" :
-          $("#slider_bg").hide();
+          window.location.href = "views/map.php";
           break;
        case "disconnected" :
-          $("#slider_bg").show();
+          window.location.href = "../index.php";
           break;
      }
      index.callInit();

@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row header text-center specials">
 		<div class="h_logo">
-			<a href="index.html"><img src="images/logo.png" alt="" class="responsive"/></a>
+			<a href="index.html"><img src="img/logo.png" alt="" class="responsive"/></a>
 		</div>
 
 
@@ -15,7 +15,7 @@
 				</li>
 				<li class="logo page-scroll">
 					<a title="hexa" href="index.php">
-						<img src="images/logo.png" alt="" class="responsive"/>
+						<img src="img/logo.png" alt="" class="responsive"/>
 					</a>
 				</li>
 			  <li class="page-scroll">
@@ -26,7 +26,7 @@
 			</ul>
 
 			<a href="#" id="pull">
-				<img src="images/nav-icon.png" title="menu" />
+				<img src="img/nav-icon.png" title="menu" />
 			</a>
 		</nav>
 		<div class="clearfix"></div>
