@@ -66,7 +66,7 @@ function displayMap(str)
       left  = j*75;
       hexagon.style.top  = top   + 'px';
       hexagon.style.left = left  + 'px';
-      //hexagon.onclick = VueVillageGCB(hexagon, i, j);
+      hexagon.onclick = onclickVillage(hexagon, i, j);
       posyTmp = i;
       posxTmp = j;
       $('#map').append(hexagon);
@@ -76,6 +76,13 @@ function displayMap(str)
   /* pour gérer les coordonnées impaires*/
   $('#map').width((y*73 + 43) + 'px');
   $('#map').height((x*86 + 43) + 'px');
+}
+
+function onclickVillage(hexagon, i, j){
+  /* This function is created in order to avoid callback event */
+  return function(){
+    window.location.href='myVillage.php?x=' + i + '&y=' + j;
+  }
 }
 
 
