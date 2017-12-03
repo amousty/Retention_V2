@@ -9,7 +9,7 @@ class Map {
     $this->id = $id;
     $this->y = $y;
     $this->x = $x;
-    $this->p = $p;
+    $this->player = $p;
   }
 }
 ?>

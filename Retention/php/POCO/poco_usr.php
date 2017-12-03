@@ -10,7 +10,7 @@
     2. updateUsr
     3. deleteUsr
     4. getListUsr
-    5. getUSr
+    5. getUsr
     6. getUsrById
   */
 
@@ -33,7 +33,7 @@
   function updateUsr($newLogin, $newPasswd, $oldLogin, $oldpasswd){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("update tblusr set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
+      $query = $GLOBALS['db']->prepare("UPDATE tblusr set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
       $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
 
       /* update session value */
@@ -50,7 +50,7 @@
   function deleteUsr($id){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("delete FROM tblusr set WHERE fldid = ?");
+      $query = $GLOBALS['db']->prepare("DELETE FROM tblusr set WHERE fldid = ?");
       $query->excute(array($id));
 
       /* update session value */
@@ -68,7 +68,7 @@
   }
 
   /* 5. getUSr */
-  function getUSr($login, $passwd){
+  function getUsr($login, $passwd){
     try{
       /* SELECT  */
       $query = $GLOBALS['db']->prepare("SELECT * from tblusr where fldlogin= ? and fldpasswd = ?");

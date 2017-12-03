@@ -8,8 +8,7 @@
 						<a href="http://w3layouts.com/"> W3Layouts</a>
 						and Adrien
 					</span>
-					</p>
-				<a href="#home" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"> </span></a>
+				</p>
 			</div>
 		</div>
 		<!-- start-smoth-scrolling -->

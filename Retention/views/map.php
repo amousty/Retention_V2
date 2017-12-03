@@ -11,10 +11,15 @@
 		<link href="../css/map.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
+		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/header.inc.php'; ?>
 		<div id="page" class="container">
   			<!-- Partie map-->
         <div id = "gamescreen">
-          <div id="ressources">
+					<!-- Divison pour la map-->
+					<div id = "map" class="col-8">
+						<!-- La carte est générée ici. -->
+					</div>
+          <div id="ressources" class="col-2">
             <img src="../img/resources/food.png"/>
             <label id="nourriture"></label><br />
             <img src="../img/resources/wood.png"/>
@@ -22,8 +27,7 @@
             <img src="../img/resources/rock.jpg"/>
             <label id="pierre"></label><br />
           </div>
-          <!-- Divison pour la map-->
-          <div id = "carte"> <!-- La carte est générée ici. --> </div>
+
           <!-- Divison pour la vue villages-->
           <div id = "village">
             <div id="infoVillage"></div>
@@ -40,6 +44,7 @@
   				</div>
         </div> <!-- Fin de gamescreen-->
 			</div> <!-- end page content -->
+			<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/footer.inc.php'; ?>
 		<script src="../js/map.js" type="text/javascript" ></script>
 	</body>
 </html>

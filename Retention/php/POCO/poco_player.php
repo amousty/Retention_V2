@@ -1,104 +1,98 @@
 <?php
   /* Includes */
-  require_once('../helpers/sessionHelper.php');
+  require_once('../db_Call.php');
+  require_once('../class/player.php');
+
+  /* Global variables */
+  $db = initDB('../');
 
   /*
-    1. insertUsr
-    2. updateUsr
-    3. deleteUsr
-    4. getListUsr
-    5. getUSr
-    6. getUsrById
+    1. insertPlayer
+    2. updatePlayer
+    3. deletePlayer
+    4. getListPlayer
+    5. getPlayerByUsrId
+    6. getPlayerByPlayerId
   */
 
-  /* 1. insertUsr */
-  function insertUsr($login, $passwd){
+  /* 1. insertPlayer */
+  function insertPlayer($usr, $color){
     try{
-      /* Prepare DB */
-      $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
-
-      /* Select  */
-      $query = $db->prepare("tblusr (fldlogin, fldpasswd) values (?, ?)");
-      $query->excute(array($login, $passwd));
-      echo "OK";
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("INSERT INTO tblplayers (fldusr, fldcolor) VALUES (?, ?)");
+      $query->bindParam(1, $usr);
+      $query->bindParam(2, $color);
+      $query->execute();
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 2. updateUsr */
-  function updateUsr($newLogin, $newPasswd, $oldLogin, $oldpasswd){
+  /* 2. updatePlayer */
+  function updatePlayer($fldColor, $usrid, $playerid){
     try{
-      /* Prepare DB */
-      $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
-
-      /* Select  */
-      $query = $db->prepare("update tblusr set fldlogin = ?, fldpasswd = ? where fldlogin = ? and fldpasswd ? ");
-      $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
-
-      /* update session value */
-      $_SESSION["login"]=$newLogin;
-      $_SESSION["passwd"]=$newPasswd;
-
-      echo "OK";
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("UPDATE tblplayers set fldcolor = ? WHERE fldusr = OR fldPlayer = ");
+      $query->excute(array($fldColor, $usrid, $playerid));
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 3. deleteUsr */
-  function deleteUsr($id){
+  /* 3. deletePlayer */
+  function deletePlayer($id){
     try{
-      /* Prepare DB */
-      $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
-
-      /* Select  */
-      $query = $db->prepare("delete from tblusr set where fldid = ?");
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("DELETE FROM tblplayers set WHERE fldplayer = ?");
       $query->excute(array($id));
 
       /* update session value */
       cleanSession();
-      echo "OK";
+      return "OK";
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 4. getListUsr */
-  function getListUsr(){
-    echo "ERR : Not implemented yet";
+  /* 4. getListPlayer */
+  function getListPlayer(){
+    return "ERR : Not implemented yet";
   }
 
-  /* 5. getUSr */
-  function getUSr($login, $passwd){
+  /* 5. getPlayerByUsrId */
+  function getPlayerByUsrId($usr){
     try{
-      /* Prepare DB */
-      $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-      $db = new PDO('sqlite:../../db/db.sqlite', '', '',  $pdo_options);
-
-      /* Select  */
-      $query = $db->prepare("select * from tblusr where fldlogin= ? and fldpasswd = ?");
-      $query->bindParam(1, $login);
-      $query->bindParam(2, $passwd);
-      $query->excute();
-      while($row=$query->fetch(PDO::FETCH_OBJ)) {
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("SELECT * from tblplayers where fldusr= ?");
+      $query->bindParam(1, $usr);
+      $query->execute();
+      while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        echo $row;
+        return new Player($row["fldplayerid"], $usr, $row["fldcolor"]);
       }
     }
     catch(PDOException $e){
-      echo "ERR : " . $e;
+      return "ERR : " . $e;
     }
   }
 
-  /* 6. getUsrById */
-  function getUsrById($id){
-
+  /* 6. getPlayerById */
+  function getPlayerByPlayerId($id){
+    try{
+      /* SELECT  */
+      $query = $GLOBALS['db']->prepare("SELECT * FROM tblplayers WHERE fldplayerid= ?");
+      $query->excute(array($id));
+      while($row=$query->fetch(PDO::FETCH_OBJ)) {
+        return new Player($row["fldid"], $row["fldusr"], row["fldcolor"]);
+      }
+    }
+    catch(PDOException $e){
+      return "ERR : " . $e;
+    }
   }
 ?>

@@ -1,6 +1,7 @@
 <?php
   /* Includes */
   require_once('../db_Call.php');
+  require_once('poco_player.php');
 
   /* Global variables */
   $db = initDB('../');
@@ -70,25 +71,23 @@
   function getMapById($mapID){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("SELECT * from tblMap where fldmapid= ?");
+      $query = $GLOBALS['db']->prepare("SELECT fldmapid, fldy, fldx, fldusr from tblMap M INNER JOIN tblPlayers P on P.fldplayerid = M.fldplayer where fldmapid= ? ORDER BY fldy, fldx");
       $query->bindParam(1, $mapID);
       $query->execute();
 
-      /* repare arrays */
-      $id = "";
+      /* Prepare arrays */
       $taby = array();
       $tabx = array();
+      /* Array of instance of player */
       $tabplayer = array();
       while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        if ($id != ""){
-          $id =$row["fldmapid"];
-        }
         array_push($taby, $row["fldy"]);
         array_push($tabx, $row["fldx"]);
-        array_push($tabplayer, $row["fldplayer"]);
+        $singlePlayer = getPlayerByUsrId($row["fldusr"]);
+        array_push($tabplayer, $singlePlayer);
       }
-      return new Map($id, $taby, $tabx, $tabplayer);
+      return new Map($mapID, $taby, $tabx, $tabplayer);
     }
     catch(PDOException $e){
       return "ERR : " . $e;

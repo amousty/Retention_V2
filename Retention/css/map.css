@@ -22,7 +22,7 @@
     height: 60px;
   }
 
-#carte
+#map
 {
   position            : relative;
   float               : left;
@@ -35,7 +35,7 @@
   background-image    : url('../img/background.jpg');
 }
 
-  #carte div
+  #map div
   {
     position            : absolute; /* obligé*/
     width               : 100px;
@@ -45,7 +45,7 @@
   }
 
   /*effet quand souris dessus */
-  #carte div:focus, #carte div:hover { transform : scale(1.05); }
+  #map div:focus, #map div:hover { transform : scale(1.05); }
 
 #village,#infoVillage, #infoPersonnage, #vueVillage
 /* affiche les informations provenant d'une génération XML + d'une Database. */
