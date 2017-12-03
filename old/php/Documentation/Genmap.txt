@@ -1,8 +1,0 @@
-Nom 		: genmap.php
-
-Rôle 		: Génère la map  et ses couleurs via une chaine de caractères séparés par des "," et des "|".
-		  Cette génération se fait sur base des dimensions de la map.
-
-Entrée(s) 	: /
-
-Sortie(s) 	: La chaine de caractères.

@@ -1,7 +1,0 @@
-Nom 		: logout.php
-
-Rôle 		: Vide les informations de la session actuelle.
-
-Entrée(s) 	: /
-
-Sortie(s) 	: /
