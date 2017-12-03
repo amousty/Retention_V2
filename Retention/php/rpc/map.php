@@ -20,7 +20,7 @@
         $mapInLine .= $singlePlayer->color;
       }
 
-      if($i % 8 == 0){
+      if($i % 10 == 0){
         $mapInLine .= "|";
       }
       else{

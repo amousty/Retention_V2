@@ -30,15 +30,11 @@
   }
 
   /* 2. updateMap */
-  function updateMap($newLogin, $newPasswd, $oldLogin, $oldpasswd){
+  function updateMap($mapId, $x, $y, $newPlayer){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("update tblMap set fldlogin = ?, fldpasswd = ? WHERE fldlogin = ? and fldpasswd ? ");
-      $query->excute(array($newLogin, $newPasswd, $oldLogin, $oldpasswd));
-
-      /* update session value */
-      updateSession("", $newLogin, $newPasswd);
-
+      $query = $GLOBALS['db']->prepare("UPDATE tblMap set fldplayer = ? WHERE fldmapid = ? AND fldx  = ? AND fldy = ? ");
+      $query->excute(array($newPlayer, $mapId, $x, $y));
       return "OK";
     }
     catch(PDOException $e){
@@ -50,11 +46,8 @@
   function deleteMap($id){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("delete FROM tblMap set WHERE fldid = ?");
+      $query = $GLOBALS['db']->prepare("DELETE FROM tblMap set WHERE fldmapid = ?");
       $query->excute(array($id));
-
-      /* update session value */
-      cleanSession();
       return "OK";
     }
     catch(PDOException $e){
@@ -71,7 +64,7 @@
   function getMapById($mapID){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("SELECT fldmapid, fldy, fldx, fldusr from tblMap M INNER JOIN tblPlayers P on P.fldplayerid = M.fldplayer where fldmapid= ? ORDER BY fldy, fldx");
+      $query = $GLOBALS['db']->prepare("SELECT fldmapid, fldx, fldy, fldusr from tblMap M INNER JOIN tblPlayers P on P.fldplayerid = M.fldplayer where fldmapid= ? ORDER BY fldy, fldx");
       $query->bindParam(1, $mapID);
       $query->execute();
 
@@ -82,12 +75,12 @@
       $tabplayer = array();
       while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        array_push($taby, $row["fldy"]);
-        array_push($tabx, $row["fldx"]);
+        array_push($taby, $row["fldx"]);
+        array_push($tabx, $row["fldy"]);
         $singlePlayer = getPlayerByUsrId($row["fldusr"]);
         array_push($tabplayer, $singlePlayer);
       }
-      return new Map($mapID, $taby, $tabx, $tabplayer);
+      return new Map($mapID, $tabx, $taby, $tabplayer);
     }
     catch(PDOException $e){
       return "ERR : " . $e;
