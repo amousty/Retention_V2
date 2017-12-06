@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require_once('../poco/poco_map.php');
+  /*require_once('../poco/poco_map.php');
   require_once('../class/map.php');
 
   $mapid  = 1;
@@ -10,7 +10,7 @@
   function buildstring($map){
     $mapInLine = "";
     $i = 1;
-    /* $map contain array of instance of players -> need to iterate on it */
+    // $map contain array of instance of players -> need to iterate on it
     // https://stackoverflow.com/questions/30680938/how-can-i-access-an-array-object
     foreach ($map->player as $singlePlayer ){
       if(is_null($singlePlayer)){
@@ -29,5 +29,5 @@
       $i++;
     } // end foreach
     return $mapInLine;
-}
+}*
 ?>

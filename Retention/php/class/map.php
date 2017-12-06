@@ -1,15 +1,13 @@
 <?php
 class Map {
   public $id;
-  public $x = array();
-    public $y = array();
-  public $player = array();
+  public $name;
+  public $createdon;
 
-  public function __construct($id, $x, $y, $p){
+  public function __construct($id, $n, $co){
     $this->id = $id;
-    $this->x = $x;
-    $this->y = $y;
-    $this->player = $p;
+    $this->name = $n;
+    $this->createdon = $co;
   }
 }
 ?>

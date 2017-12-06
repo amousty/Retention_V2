@@ -13,6 +13,7 @@
 	<body>
 		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/header.inc.php'; ?>
 
+		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../php/rpc/village.php'; ?>
 
 		<?php require_once $_SERVER['DOCUMENT_ROOT']. '../inc/footer.inc.php'; ?>
 	<script src="../js/map.js" type="text/javascript" ></script>
