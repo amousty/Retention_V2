@@ -37,6 +37,7 @@ function generateMap(){
 
 function displayMap(str)
 {
+  alert(str);
   var hexagon;
   var top   = 0;
   var left  = 0;

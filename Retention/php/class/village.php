@@ -1,9 +1,9 @@
 <?php
-class Map {
+class Village {
   public $id;
-  public $x = array();
-  public $y = array();
-  public $player = array();
+  public $x;
+  public $y;
+  public $player;
   public $firstbuildon;
   public $firstbuildby;
   public $lastbuildon;

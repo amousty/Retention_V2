@@ -5,6 +5,7 @@
 
   /* Global variables */
   $db = initDB('../');
+  $today = date("Y-m-d H:i:s");
 
   /*
     1. insertMap
@@ -18,12 +19,42 @@
   /* 1. insertMap */
   function insertMap($mapname){
     try{
-      $today = date("Y-m-d H:i:s");
-      /* SELECT  */
+      // 1. Insert map
       $query = $GLOBALS['db']->prepare("INSERT INTO tblMap (fldmapname, fldmapcreatedon) VALUES (?, ?)");
       $query->bindParam(1, $mapname);
-      $query->bindParam(2, $today);
+      $query->bindParam(2, $GLOBALS['today']);
       $query->execute();
+
+      // 2. Get id of the map
+      // #TODO : Replace this shit
+      $queryGetMapId = $GLOBALS['db']->prepare("SELECT fldmapid FROM tblmap ORDER BY fldmapid DESC LIMIT 1");
+      $queryGetMapId->execute();
+      if($row=$queryGetMapId->fetch(PDO::FETCH_ASSOC)){
+        $mapID = $row["fldmapid"];
+        VAR_DUMP($mapID);
+
+        // A NEW MAP WILL CREATE VILLAGES
+        for($i = 1; $i <= 8; $i++){
+          for($j = 1; $j <= 10; $j++){
+            // 3. Generate new village
+            insertVillage($i, $j, 0);
+
+            // 4. Get id of the villageID
+            // #TODO : Replace this shit
+            $queryGetVillageId = $GLOBALS['db']->prepare("SELECT fldVillageid FROM tblVillage ORDER BY fldVillageid DESC LIMIT 1");
+            $queryGetVillageId->execute();
+            if($row=$queryGetVillageId->fetch(PDO::FETCH_ASSOC)){
+
+              // Create a link between them
+              $queryInsertLinkVillage = $GLOBALS['db']->prepare("INSERT INTO tblMapPlayerLink (fldmapid, fldvillageid, fldmaplinkcreatedon) VALUES (?, ?, ?)");
+              $queryInsertLinkVillage->bindParam(1, $mapID);
+              $queryInsertLinkVillage->bindParam(2, $row["fldVillageid"]);
+              $queryInsertLinkVillage->bindParam(3, $GLOBALS['today']);
+              $queryInsertLinkVillage->execute();
+            }
+          }
+        }
+      }
       return "OK";
     }
     catch(PDOException $e){

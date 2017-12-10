@@ -5,9 +5,10 @@
 
   /* Global variables */
   $db = initDB('../');
+  $today = date("Y-m-d H:i:s");
 
   /*
-    1. insertVillage #TODO : MODIFY
+    1. insertVillage
     2. updateVillage
     3. deleteVillage
     4. getListVillage #TODO : MODIFY
@@ -17,12 +18,18 @@
   */
 
   /* 1. insertVillage */
-  function insertVillage($login, $passwd){
+  function insertVillage($x, $y, $creatorId){
     try{
       /* SELECT  */
-      $query = $GLOBALS['db']->prepare("INSERT INTO tblVillage (fldlogin, fldpasswd) VALUES (?, ?)");
-      $query->bindParam(1, $login);
-      $query->bindParam(2, $passwd);
+      $query = $GLOBALS['db']->prepare("INSERT INTO tblVillage (fldx, fldy, fldplayer, fldfirstbuildon, fldfirstbuildby, fldlastbuildon, fldlastbuildby) VALUES (?, ?, 0, ?, ?, ?, ?)");
+      $query->bindParam(1, $x);
+      $query->bindParam(2, $y);
+      // Param 3 -> fld player, always set to zero when creating map
+      $query->bindParam(4, $GLOBALS['today']);
+      $query->bindParam(5, $creatorId);
+      $query->bindParam(6, $GLOBALS['today']);
+      $query->bindParam(7, $creatorId);
+
       $query->execute();
       return "OK";
     }
@@ -34,14 +41,14 @@
   /* 2. updateVillage */
   function updateVillage($mapId, $x, $y, $newPlayer){
     try{
-      $today = date("Y-m-d H:i:s");
+
       /* SELECT  */
       $query = $GLOBALS['db']->prepare(
         "UPDATE tblVillage  V set fldlastbuildon = ?, fldlastbuildby = ? ,fldplayer = ?
         INNER JOIN tblmapvillagelink MVL
         ON MVL.fldvillageid = V.fldvillageid
         WHERE fldmapid = ? AND fldx  = ? AND fldy = ?");
-      $query->excute(array($today, $newPlayer, $newPlayer, $mapId, $x, $y));
+      $query->excute(array($GLOBALS['today'], $newPlayer, $newPlayer, $mapId, $x, $y));
       return "OK";
     }
     catch(PDOException $e){
@@ -95,7 +102,6 @@
           $row["fldlastbuildon"],
           $row["fldlastbuildby"]);
       }
-      }
     }
     catch(PDOException $e){
       return "ERR : " . $e;
@@ -144,30 +150,48 @@
       $query = $GLOBALS['db']->prepare(
         "SELECT V.*
         from tblVillage V
-        INNER JOIN tblMapVillageLink MVL on MVL.fldVillageid = V.fldvVillageId
+        INNER JOIN tblMapVillageLink MVL on MVL.fldVillageid = V.fldVillageId
         where MVL.fldmapid= ?");
       $query->bindParam(1, $mapid);
       $query->execute();
 
       /* Prepare arrays */
-      $tabVillageID = array();
+      /*$tabVillageID = array();
       $tabX = array();
       $tabY = array();
       $tabPlayer = array();
       $tabFirstBuildOn = array();
       $tabFirstBuildBy = array();
       $tabLastBuildOn  = array();
-      $tabLastByuildBy = array();
-      
+      $tabLastByuildBy = array();*/
+
+      $tablVillages = array();
+
       while($row=$query->fetch(PDO::FETCH_ASSOC)) {
         /*its getting data in line. And its an object*/
-        array_push(
+        /*array_push($tabVillageID, $row["fldVillageId"]);
+        array_push($$tabFirstBuildBytabX, $row["fld"]);
+        array_push($tabY, $row["fld"]);
+        array_push($tabPlayer, $row["fld"]);
+        array_push($tabFirstBuildOn, $row["fld"]);
+        array_push($tabFirstBuildBy, $row["fld"]);
+        array_push($tabLastBuildOn, $row["fld"]);
+        array_push($tabLastByuildBy, $row["fld"]);*/
+
+        array_push($tablVillages, new Village(
+          $row["fldvillageid"],
+          $row["fldx"],
+          $row["fldy"],
+          $row["fldplayer"],
+          $row["fldfirstbuildon"],
+          $row["fldfirstbuildby"],
+          $row["fldlastbuildon"],
+          $row["fldlastbuildby"])
         );
-        array_push($tabx, $row["fldy"]);
-        $singlePlayer = getPlayerByUsrId($row["fldusr"]);
-        array_push($tabplayer, $singlePlayer);
       }
-      return new Village($mapID, $tabx, $taby, $tabplayer);
+    //  return new Village($mapID, $tabx, $taby, $tabplayer);
+
+    return $tablVillages;
     }
     catch(PDOException $e){
       return "ERR : " . $e;
